@@ -39,11 +39,11 @@ public class HorizontalNumberPickerActivity extends AppCompatActivity {
     private void initData () {
         datas = new ArrayList<>();
 
-        for(int i =1;i <= 16;i++) {
-            if (i <= 3 || i >= 14) {
+        for(int i =1;i <= 14;i++) {
+            if (i <= 2 || i >= 13) {
                 datas.add("");
             } else {
-                datas.add(String.valueOf(i-3));
+                datas.add(String.valueOf(i-2));
             }
         }
     }
@@ -70,6 +70,6 @@ public class HorizontalNumberPickerActivity extends AppCompatActivity {
     }
 
     private int getScrollPosition() {
-        return (int) (((double) recyclerView.computeHorizontalScrollOffset() / (double) recyclerViewAdapter.getItemWidth())+0.5f) + 1;
+        return (int) (((double) recyclerView.computeHorizontalScrollOffset() / recyclerViewAdapter.getItemWidth())+0.5f) + 1;
     }
 }

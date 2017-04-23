@@ -57,9 +57,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView tvNumber;
     }
 
-    public float getItemWidth() {
+    public double getItemWidth() {
         DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
-        return displayMetrics.widthPixels / 7;
+        return displayMetrics.widthPixels / 6.5;
     }
 
 
