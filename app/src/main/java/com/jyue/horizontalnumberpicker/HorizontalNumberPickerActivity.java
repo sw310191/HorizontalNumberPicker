@@ -18,6 +18,8 @@ public class HorizontalNumberPickerActivity extends AppCompatActivity {
     private RecyclerViewAdapter recyclerViewAdapter;
     private ArrayList<String> datas;
     private Button button;
+    private LinearLayoutManager linearLayoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class HorizontalNumberPickerActivity extends AppCompatActivity {
     private void initData () {
         datas = new ArrayList<>();
 
-        for(int i =1;i <= 14;i++) {
+        for(int i = 1;i <= 14;i++) {
             if (i <= 2 || i >= 13) {
                 datas.add("");
             } else {
@@ -53,7 +55,7 @@ public class HorizontalNumberPickerActivity extends AppCompatActivity {
     }
 
     private void setRecyclerView() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         new LinearSnapHelper().attachToRecyclerView(recyclerView);
@@ -64,12 +66,23 @@ public class HorizontalNumberPickerActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HorizontalNumberPickerActivity.this, String.valueOf(getScrollPosition()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(HorizontalNumberPickerActivity.this, String.valueOf((getScollYDistance() / getItemWidth()) + 1), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private int getScrollPosition() {
-        return (int) (((double) recyclerView.computeHorizontalScrollOffset() / recyclerViewAdapter.getItemWidth())+0.5f) + 1;
+    //取得滑動距離
+    public int getScollYDistance() {
+        int position = linearLayoutManager.findFirstVisibleItemPosition();
+        View firstVisiableChildView = linearLayoutManager.findViewByPosition(position);
+        int itemHeight = firstVisiableChildView.getHeight();
+        return (position) * itemHeight - firstVisiableChildView.getTop();
+    }
+
+    //取得Item寬
+    public int getItemWidth() {
+        int position = linearLayoutManager.findFirstVisibleItemPosition();
+        View firstVisiableChildView = linearLayoutManager.findViewByPosition(position);
+        return firstVisiableChildView.getHeight();
     }
 }
